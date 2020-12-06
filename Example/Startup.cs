@@ -55,25 +55,6 @@ namespace Apsy.Elemental.Example.Web
 
             services.AddControllersWithViews();
 
-            GraphBuilder.Register<Restaurant>();
-            GraphBuilder.Register<Branch>();
-            GraphBuilder.Register<Order>(true);
-            GraphBuilder.Register<OrderItem>(true);
-            GraphBuilder.Register<OrderItemChange>(true);
-            GraphBuilder.Register<SavedPaymentCard>(true);
-            GraphBuilder.Register<Customer>(true);
-            GraphBuilder.Register<CustomerAddress>(true);
-            GraphBuilder.Register<SearchHistory>(true);
-            GraphBuilder.Register<Menu>(false);
-            GraphBuilder.Register<MenuItem>(false);
-            GraphBuilder.Register<MenuSection>(false);
-            GraphBuilder.Register<Portion>(false);
-            GraphBuilder.Register<ItemPortion>(false);
-            GraphBuilder.Register<Ingredient>(false);
-            GraphBuilder.Register<IngredientCategory>(false);
-            GraphBuilder.Register<ItemIngredient>(false);
-            GraphBuilder.BuildApi(services);
-
             services.AddSingleton<SingltonDataContextService>();
             services.AddSingleton<IAuthService, FirebaseAuthService>();
             services.AddSingleton<OrderService>();

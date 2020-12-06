@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -23,11 +22,16 @@ namespace Apsy.Elemental.Core.Graph
                 enumMap.Add(enumType, graphApiEnumType);
             }
         }
-            
+
         public static void Register<TModel>(bool mutable = false)
         {
             var tmodel = typeof(TModel);
-            if (!typeMap.ContainsKey(tmodel))
+            Register(tmodel, mutable);
+        }
+
+        public static void Register(Type tmodel, bool mutable = false)
+        {
+            if (!mutable && !typeMap.ContainsKey(tmodel))
             {
                 var graphApiGenericType = typeof(GraphApi<>);
                 var graphApiType = graphApiGenericType.MakeGenericType(tmodel);
@@ -44,19 +48,19 @@ namespace Apsy.Elemental.Core.Graph
 
         public static void BuildApi(IServiceCollection services)
         {
-            foreach (var kv in typeMap)
+            foreach (var kv in typeMap.ToList())
             {
                 var graphApi = Activator.CreateInstance(kv.Value);
                 services.AddSingleton(kv.Value, graphApi);
             }
 
-            foreach (var kv in inputMap)
+            foreach (var kv in inputMap.ToList())
             {
                 var graphInputApi = Activator.CreateInstance(kv.Value);
                 services.AddSingleton(kv.Value, graphInputApi);
             }
 
-            foreach (var kv in enumMap)
+            foreach (var kv in enumMap.ToList())
             {
                 var graphEnumApi = Activator.CreateInstance(kv.Value);
                 services.AddSingleton(kv.Value, graphEnumApi);
@@ -80,7 +84,12 @@ namespace Apsy.Elemental.Core.Graph
                     }
                 }
 
-                var isRequired = Attribute.IsDefined(exposedPropery, typeof(RequiredAttribute));
+                var underlyingType = exposedPropery.PropertyType;
+                var isNullable = Nullable.GetUnderlyingType(exposedPropery.PropertyType) != null;
+                if (isNullable)
+                {
+                    underlyingType = Nullable.GetUnderlyingType(exposedPropery.PropertyType);
+                }
 
                 var parameter = Expression.Parameter(typeof(T), "type");
                 var memberExpression = Expression.Property(parameter, exposedPropery.Name);
@@ -88,78 +97,89 @@ namespace Apsy.Elemental.Core.Graph
 
                 if (exposedPropery.PropertyType.IsEnum)
                 {
-                    GraphBuilder.RegisterEnum(exposedPropery.PropertyType);
+                    RegisterEnum(exposedPropery.PropertyType);
                 }
 
                 switch (exposedPropery.PropertyType.Name)
                 {
                     case "String":
-                        graph.Field((Expression<Func<T, string>>)fieldExpression, !isRequired, typeof(StringGraphType));
+                        graph.Field((Expression<Func<T, string>>)fieldExpression, !isNullable, typeof(StringGraphType));
                         break;
                     case "Int32":
-                        graph.Field((Expression<Func<T, int>>)fieldExpression, !isRequired, typeof(IntGraphType));
+                        graph.Field((Expression<Func<T, int>>)fieldExpression, !isNullable, typeof(IntGraphType));
                         break;
                     case "List`1":
-                        graph.Field((dynamic)fieldExpression, !isRequired, GetListGraphType(
-                            exposedPropery.PropertyType.GetGenericArguments()[0], isInputType));
-                        break;
-                    case "Nullable`1":
-                        graph.Field((dynamic)fieldExpression, !isRequired, GetNullableGraphType(
+                        graph.Field((dynamic)fieldExpression, !isNullable, GetListGraphType(
                             exposedPropery.PropertyType.GetGenericArguments()[0], isInputType));
                         break;
                     case "Double":
-                        graph.Field((Expression<Func<T, double>>)fieldExpression, !isRequired, typeof(FloatGraphType));
+                        graph.Field((Expression<Func<T, double>>)fieldExpression, !isNullable, typeof(FloatGraphType));
                         break;
                     case "DateTime":
-                        graph.Field((Expression<Func<T, DateTime>>)fieldExpression, !isRequired, typeof(DateTimeGraphType));
+                        graph.Field((Expression<Func<T, DateTime>>)fieldExpression, !isNullable, typeof(DateTimeGraphType));
                         break;
                     case "Boolean":
-                        graph.Field((Expression<Func<T, bool>>)fieldExpression, !isRequired, typeof(BooleanGraphType));
+                        graph.Field((Expression<Func<T, bool>>)fieldExpression, !isNullable, typeof(BooleanGraphType));
                         break;
                     default:
                         if (exposedPropery.PropertyType.IsEnum)
                         {
-                            graph.Field((dynamic)fieldExpression, !isRequired,
-                                GraphBuilder.GetEnumType(exposedPropery.PropertyType));
+                            graph.Field((dynamic)fieldExpression, !isNullable,
+                                GetEnumType(exposedPropery.PropertyType, isInputType));
                         }
-                        else // a custom type
+                        else // custom type
                         {
-                            graph.Field((dynamic)fieldExpression, !isRequired,
-                                isInputType ? GraphBuilder.GetGraphInputType(exposedPropery.PropertyType) :
-                                    GraphBuilder.GetGraphType(exposedPropery.PropertyType));
+                            graph.Field((dynamic)fieldExpression, !isNullable,
+                                isInputType ? GetGraphInputType(exposedPropery.PropertyType, isInputType) :
+                                GetGraphType(exposedPropery.PropertyType, isInputType));
                         }
                         break;
                 }
             }
         }
 
-        private static Type GetListGraphType(Type innerType, bool getInputType)
+        private static Type GetListGraphType(Type innerType, bool mutable)
         {
             var nullableType = typeof(ListGraphType<>);
-            var graphType = getInputType ? GraphBuilder.GetGraphInputType(innerType) : GraphBuilder.GetGraphType(innerType);
+            var graphType = mutable ? GetGraphInputType(innerType, mutable) : GetGraphType(innerType, mutable);
             var genericType = nullableType.MakeGenericType(graphType);
             return genericType;
         }
 
-        private static Type GetNullableGraphType(Type innerType, bool getInputType)
+        private static Type GetNullableGraphType(Type innerType, bool mutable)
         {
-            var listType = getInputType ? typeof(InputObjectGraphType<>) : typeof(ObjectGraphType<>);
+            var listType = mutable ? typeof(InputObjectGraphType<>) : typeof(ObjectGraphType<>);
             var genericType = listType.MakeGenericType(innerType);
             return genericType;
         }
 
-        private static Type GetEnumType(Type enumType)
+        private static Type GetEnumType(Type enumType, bool mutable)
         {
+            if (!enumMap.ContainsKey(enumType))
+            {
+                Register(enumType, mutable);
+            }
+
             return enumMap[enumType];
         }
 
-        private static Type GetGraphType(Type modelType)
+        private static Type GetGraphType(Type modelType, bool mutable)
         {
+            if (!typeMap.ContainsKey(modelType))
+            {
+                Register(modelType, mutable);
+            }
+
             return typeMap[modelType];
         }
 
-        private static Type GetGraphInputType(Type modelType)
+        private static Type GetGraphInputType(Type modelType, bool mutable)
         {
+            if (!inputMap.ContainsKey(modelType))
+            {
+                Register(modelType, mutable);
+            }
+
             return inputMap[modelType];
         }
     }
