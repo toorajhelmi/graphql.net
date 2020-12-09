@@ -2,21 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Authors>Apsy</Authors>
-    <Product>Core</Product>
+    <Version>1.1.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Apsy (C) 2020</Copyright>
     <Description>Makes using GraphQL in .NET as easy as applying an attribute {Api] to exposed properties and registeting the types using dependecy injection.
 
-Wraps the implementation of GraphQL by Joe McBride (https://github.com/graphql-dotnet/graphql-dotnet). Using this implementation, the consumer needs to define many extra types like GraphTypes, GraphInputTypes, ... which is very time consuming and include repetitive code. 
+Wraps the implementation of GraphQL by Joe McBride (https://github.com/graphql-dotnet/graphql-dotnet). Using this implementation, the consumer needs to define many extra types like GraphTypes, GraphInputTypes, ... which is very time consuming and include repetitive code.
 
 We eliminate this pain by using reflection to automatically generate those types.</Description>
-    <Copyright>© Apsy 2020</Copyright>
-    <Company>Apsy</Company>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>- Fix for mutations with nullables.
+- Using friendly names for Graph types</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/toorajhelmi/graphql.net</PackageProjectUrl>
+    <PackageIcon>Apsy_Logo.png</PackageIcon>
     <RepositoryUrl>https://github.com/toorajhelmi/graphql.net</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>GraphQL</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <FileVersion>1.1.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +34,13 @@ We eliminate this pain by using reflection to automatically generate those types
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Apsy_Logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
