@@ -12,10 +12,9 @@ We eliminate this pain by using reflection to automatically generate those types
 
 Follow these step:
 
-Apply [Api] attribute to properties you would like to expose. You can optionally pass a false to make the property immutable.
-
-1. Define your queries, mutations, and subscription.
-2. To see an example how to do it see the project page
+1. Apply [Api] attribute to properties you would like to expose. You can optionally pass a false to make the property immutable.
+2. Define your queries, mutations, and subscription.
+3. To see an example how to do it see the project page
 
 ## Additional Services
 
