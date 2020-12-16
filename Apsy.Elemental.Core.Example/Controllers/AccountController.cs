@@ -1,9 +1,7 @@
 ﻿using Apsy.Elemental.Core.Identity;
-using Apsy.Elemental.Example.Web.Models;
 using Apsy.Elemental.Example.Admin.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using static Apsy.Elemental.Core.Identity.IAuthService;

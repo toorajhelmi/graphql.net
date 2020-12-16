@@ -1,10 +1,8 @@
 using Apsy.Elemental.Core.ApiDoc;
-using Apsy.Elemental.Core.Graph;
 using Apsy.Elemental.Core.Identity;
-using Apsy.Elemental.Example.Web.Api;
-using Apsy.Elemental.Example.Web.Models;
-using Apsy.Elemental.Example.Web.Services;
 using Apsy.Elemental.Example.Admin.Data;
+using Apsy.Elemental.Example.Web.Api;
+using Apsy.Elemental.Example.Web.Services;
 using GraphQL.Server;
 using GraphQL.Server.Ui.GraphiQL;
 using GraphQL.Server.Ui.Voyager;
@@ -69,7 +67,6 @@ namespace Apsy.Elemental.Example.Web
             services.AddGraphQL(options =>
             {
                 options.EnableMetrics = environment.IsDevelopment();
-                options.ExposeExceptions = environment.IsDevelopment();
             })
             .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
             .AddWebSockets()
