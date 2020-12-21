@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 using System.Reflection;
 
-namespace Apsy.Elemental.Core.ApiDoc
+namespace Apsy.Common.Api.ApiDoc
 {
     public class SwaggerIgnoreFilter : ISchemaFilter
     {

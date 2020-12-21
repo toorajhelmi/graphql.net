@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Apsy.Elemental.Core.Identity
+namespace Apsy.Common.Api.Identity
 {
     public interface IAuthService
     {

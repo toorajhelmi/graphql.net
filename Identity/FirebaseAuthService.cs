@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Apsy.Elemental.Core.Identity.IAuthService;
+using static Apsy.Common.Api.Identity.IAuthService;
 
-namespace Apsy.Elemental.Core.Identity
+namespace Apsy.Common.Api.Identity
 {
     public class FirebaseAuthService : IAuthService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Apsy.Elemental.Core.ApiDoc
+namespace Apsy.Common.Api.ApiDoc
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class SwaggerIgnoreAttribute : Attribute
