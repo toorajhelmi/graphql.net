@@ -1,5 +1,5 @@
-﻿using Apsy.Elemental.Example.Admin.Data;
-using Apsy.Example.Services;
+﻿using Apsy.Common.Api.Graph;
+using Apsy.Elemental.Example.Admin.Data;
 using GraphQL.Types;
 
 namespace Apsy.Example.Queries

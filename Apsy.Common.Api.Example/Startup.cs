@@ -1,4 +1,5 @@
 using Apsy.Common.Api.ApiDoc;
+using Apsy.Common.Api.Graph;
 using Apsy.Common.Api.Identity;
 using Apsy.Elemental.Example.Admin.Data;
 using Apsy.Example.Api;
