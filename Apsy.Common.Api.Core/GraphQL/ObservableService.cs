@@ -2,7 +2,7 @@
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
-namespace Apsy.Common.Api
+namespace Apsy.Common.Api.Core
 {
     public class ObservableService<T>
     {

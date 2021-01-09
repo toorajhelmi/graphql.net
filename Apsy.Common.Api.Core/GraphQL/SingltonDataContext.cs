@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Apsy.Common.Api.Graph
+namespace Apsy.Common.Api.Core.Graph
 {
     public class SingltonDataContextService<TDataContext>
     {

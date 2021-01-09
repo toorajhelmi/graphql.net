@@ -1,4 +1,4 @@
-﻿using Apsy.Common.Api.Graph;
+﻿using Apsy.Common.Api.Core.Graph;
 using Apsy.Example.Models;
 using Apsy.Example.Responses;
 using Apsy.Example.Services;

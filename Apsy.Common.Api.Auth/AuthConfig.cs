@@ -1,6 +1,6 @@
 ﻿using System.Security.Policy;
 
-namespace Apsy.Common.Api.Identity
+namespace Apsy.Common.Api.Auth
 {
     public class AuthConfig
     { 

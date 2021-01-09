@@ -1,11 +1,11 @@
-﻿using Apsy.Common.Api.Graph;
+﻿using Apsy.Common.Api.Core.Graph;
 using GraphQL;
 using GraphQL.Resolvers;
 using GraphQL.Types;
 using System;
 using System.Reactive.Linq;
 
-namespace Apsy.Common.Api.GraphQL
+namespace Apsy.Common.Api.Core.GraphQL
 {
     public class SubscriptionBase : ObjectGraphType
     {

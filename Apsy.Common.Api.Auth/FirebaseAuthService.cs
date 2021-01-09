@@ -1,13 +1,12 @@
-﻿using Firebase.Auth;
-using Newtonsoft.Json;
+﻿using Apsy.Common.Api.Core.Helper;
+using Firebase.Auth;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Apsy.Common.Api.Identity.IAuthService;
+using static Apsy.Common.Api.Auth.IAuthService;
 
-namespace Apsy.Common.Api.Identity
+namespace Apsy.Common.Api.Auth
 {
     public class FirebaseAuthService : IAuthService
     {
@@ -36,11 +35,19 @@ namespace Apsy.Common.Api.Identity
                 {
                     switch (e.Reason)
                     {
-                        case AuthErrorReason.EmailExists: throw new AuthException(SignUpError.EmailAlreadyExists);
-                        case AuthErrorReason.WeakPassword: throw new AuthException(SignUpError.WeakPassword);
-                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail);
-                        default: throw new AuthException(SignUpError.Other);
+                        case AuthErrorReason.EmailExists: throw new AuthException(SignUpError.EmailAlreadyExists.ToDescription());
+                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail.ToDescription());
+                        case AuthErrorReason.MissingPassword: throw new AuthException(SignUpError.MissingPassword.ToDescription());
+                        case AuthErrorReason.WeakPassword: throw new AuthException(SignUpError.WeakPassword.ToDescription());
+                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail.ToDescription());
+                        case AuthErrorReason.OperationNotAllowed: throw new AuthException(e.Message);
+                        case AuthErrorReason.Undefined: throw new AuthException(e.InnerException != null ? e.InnerException.Message : e.Message);
+                        default: throw new AuthException(SignUpError.Other.ToDescription());
                     }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
                 }
             }
         }
@@ -70,12 +77,18 @@ namespace Apsy.Common.Api.Identity
                 {
                     switch (e.Reason)
                     {
-                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail);
-                        case AuthErrorReason.WrongPassword: throw new AuthException(SignUpError.WrongPassowrd);
-                        case AuthErrorReason.UserDisabled: throw new AuthException(SignUpError.DisabledUser);
-                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail);
-                        default: throw new AuthException(SignUpError.Other);
+                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail.ToDescription());
+                        case AuthErrorReason.MissingPassword: throw new AuthException(SignUpError.MissingPassword.ToDescription());
+                        case AuthErrorReason.WrongPassword: throw new AuthException(SignUpError.WrongPassowrd.ToDescription());
+                        case AuthErrorReason.UserDisabled: throw new AuthException(SignUpError.DisabledUser.ToDescription());
+                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail.ToDescription());
+                        case AuthErrorReason.Undefined: throw new AuthException(e.InnerException != null ? e.InnerException.Message : e.Message);
+                        default: throw new AuthException(SignUpError.Other.ToDescription());
                     }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
                 }
             }
         }
@@ -115,12 +128,17 @@ namespace Apsy.Common.Api.Identity
                 {
                     switch (e.Reason)
                     {
-                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail);
-                        case AuthErrorReason.WrongPassword: throw new AuthException(SignUpError.WrongPassowrd);
-                        case AuthErrorReason.UserDisabled: throw new AuthException(SignUpError.DisabledUser);
-                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail);
-                        default: throw new AuthException(SignUpError.Other);
+                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail.ToDescription());
+                        case AuthErrorReason.WrongPassword: throw new AuthException(SignUpError.WrongPassowrd.ToDescription());
+                        case AuthErrorReason.UserDisabled: throw new AuthException(SignUpError.DisabledUser.ToDescription());
+                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail.ToDescription());
+                        case AuthErrorReason.Undefined: throw new AuthException(e.InnerException != null ? e.InnerException.Message : e.Message);
+                        default: throw new AuthException(SignUpError.Other.ToDescription());
                     }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
                 }
             }
         }

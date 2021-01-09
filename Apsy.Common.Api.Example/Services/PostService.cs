@@ -1,5 +1,5 @@
-﻿using Apsy.Common.Api;
-using Apsy.Common.Api.Graph;
+﻿using Apsy.Common.Api.Core;
+using Apsy.Common.Api.Core.Graph;
 using Apsy.Elemental.Example.Admin.Data;
 using Apsy.Example.Models;
 using Apsy.Example.Responses;

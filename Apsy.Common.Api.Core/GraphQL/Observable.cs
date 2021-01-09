@@ -1,8 +1,8 @@
-﻿using Apsy.Common.Api.Graph;
+﻿using Apsy.Common.Api.Core.Graph;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Apsy.Common.Api
+namespace Apsy.Common.Api.Core
 {
     public enum EventType
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Apsy.Common.Api.Graph
+namespace Apsy.Common.Api.Core.Graph
 {
     public static class GraphBuilder
     {

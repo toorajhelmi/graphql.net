@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Apsy.Common.Api.Identity
+namespace Apsy.Common.Api.Auth
 {
     public class AuthToken
     {

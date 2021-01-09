@@ -1,6 +1,6 @@
-using Apsy.Common.Api.ApiDoc;
-using Apsy.Common.Api.Graph;
-using Apsy.Common.Api.Identity;
+using Apsy.Common.Api.Auth;
+using Apsy.Common.Api.Core.ApiDoc;
+using Apsy.Common.Api.Core.Graph;
 using Apsy.Elemental.Example.Admin.Data;
 using Apsy.Example.Api;
 using Apsy.Example.Mutations;

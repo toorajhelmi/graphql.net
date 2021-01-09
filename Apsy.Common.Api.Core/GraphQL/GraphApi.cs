@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using System;
 
-namespace Apsy.Common.Api.Graph
+namespace Apsy.Common.Api.Core.Graph
 {
     public class GraphApi<T> : ObjectGraphType<T>
     {

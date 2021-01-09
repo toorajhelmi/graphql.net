@@ -1,5 +1,5 @@
-﻿using Apsy.Common.Api.Graph;
-using Apsy.Common.Api.Identity;
+﻿using Apsy.Common.Api.Auth;
+using Apsy.Common.Api.Core.Graph;
 using System.Collections.Generic;
 
 namespace Apsy.Example.Models

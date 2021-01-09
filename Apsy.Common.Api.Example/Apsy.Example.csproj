@@ -39,7 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apsy.Common.Api\Apsy.Common.Api.csproj" />
+    <ProjectReference Include="..\Apsy.Common.Api.Auth\Apsy.Common.Api.Auth.csproj" />
+    <ProjectReference Include="..\Apsy.Common.Api.Core\Apsy.Common.Api.Core.csproj" />
   </ItemGroup>
 
 </Project>

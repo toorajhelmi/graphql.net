@@ -1,8 +1,5 @@
-﻿using Apsy.Example.Models;
-using Apsy.Example.Services;
-using Apsy.Common.Api.GraphQL;
+﻿using Apsy.Common.Api.Core.GraphQL;
 using System;
-using Apsy.Common.Api;
 
 namespace Apsy.Example.Subscriptions
 {

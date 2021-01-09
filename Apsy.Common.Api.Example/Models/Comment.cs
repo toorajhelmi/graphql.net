@@ -1,4 +1,4 @@
-﻿using Apsy.Common.Api.Graph;
+﻿using Apsy.Common.Api.Core.Graph;
 
 namespace Apsy.Example.Models
 {

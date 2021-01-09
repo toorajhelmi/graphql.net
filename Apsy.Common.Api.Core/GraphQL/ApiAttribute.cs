@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Apsy.Common.Api.Graph
+namespace Apsy.Common.Api.Core.Graph
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
     public class ApiAttribute : Attribute

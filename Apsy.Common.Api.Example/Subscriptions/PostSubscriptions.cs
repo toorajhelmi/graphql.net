@@ -1,5 +1,5 @@
-﻿using Apsy.Common.Api;
-using Apsy.Common.Api.GraphQL;
+﻿using Apsy.Common.Api.Core;
+using Apsy.Common.Api.Core.GraphQL;
 using Apsy.Example.Models;
 using Apsy.Example.Services;
 using Microsoft.Extensions.DependencyInjection;

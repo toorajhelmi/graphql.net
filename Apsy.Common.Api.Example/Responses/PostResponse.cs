@@ -1,4 +1,4 @@
-﻿using Apsy.Common.Api;
+﻿using Apsy.Common.Api.Core;
 using Apsy.Example.Models;
 
 namespace Apsy.Example.Responses

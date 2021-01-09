@@ -1,7 +1,7 @@
-﻿using Apsy.Common.Api.Graph;
+﻿using Apsy.Common.Api.Core.Graph;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Apsy.Common.Api.Identity
+namespace Apsy.Common.Api.Auth
 {
     public class UserBase
     {

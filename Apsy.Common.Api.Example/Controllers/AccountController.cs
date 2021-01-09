@@ -1,10 +1,10 @@
-﻿using Apsy.Common.Api.Identity;
+﻿using Apsy.Common.Api.Auth;
 using Apsy.Elemental.Example.Admin.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using static Apsy.Common.Api.Identity.IAuthService;
+using static Apsy.Common.Api.Auth.IAuthService;
 
 namespace Apsy.Example.Controllers
 {
