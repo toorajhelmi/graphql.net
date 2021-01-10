@@ -21,8 +21,8 @@ namespace Apsy.Common.Api.Core.GraphQL
                 Resolver = new FuncFieldResolver<Observable<T>>(c => c.Source as Observable<T>),
                 Subscriber = new EventStreamResolver<Observable<T>>(c =>
                 {
-                    var orderId = c.GetArgument<int>(idProperyName);
-                    var observer = observableService.EventStream().Where(o => idSelector(o) == orderId);
+                    var id = c.GetArgument<int>(idProperyName);
+                    var observer = observableService.EventStream().Where(o => idSelector(o) == id);
                     return observer;
                 })
             };
