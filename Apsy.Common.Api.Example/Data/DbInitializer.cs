@@ -1,7 +1,6 @@
-﻿using Apsy.Example.Models;
-using Apsy.Elemental.Example.Admin.Data;
+﻿using Apsy.Elemental.Example.Admin.Data;
+using Apsy.Example.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 
 namespace Apsy.Example.Data

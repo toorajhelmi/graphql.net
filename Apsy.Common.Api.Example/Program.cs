@@ -1,5 +1,5 @@
-using Apsy.Example.Data;
 using Apsy.Elemental.Example.Admin.Data;
+using Apsy.Example.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

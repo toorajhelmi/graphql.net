@@ -1,5 +1,4 @@
 ﻿using GraphQL.Types;
-using System;
 
 namespace Apsy.Common.Api.Core.Graph
 {

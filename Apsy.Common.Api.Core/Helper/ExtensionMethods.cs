@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
-using System.Text;
 
 namespace Apsy.Common.Api.Core.Helper
 {

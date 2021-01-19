@@ -1,12 +1,4 @@
-﻿using GraphQL;
-using GraphQL.SystemTextJson;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace Apsy.Common.Api.Core.Graph
+﻿namespace Apsy.Common.Api.Core.Graph
 {
     //public class GraphQLController : Controller
     //{

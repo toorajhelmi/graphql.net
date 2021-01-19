@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace Apsy.Common.Api.Auth
+﻿namespace Apsy.Common.Api.Auth
 {
     public class AuthConfig
     { 

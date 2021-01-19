@@ -46,7 +46,24 @@ namespace Apsy.Example.Controllers
             var authToken = await authService.SocialLogin(authConfig, IAuthService.SocialAuthProvider.Facebook, accessToken);
             authToken.CustomerExists = dataContext.Users.Any(c => c.FirebaseUserId == authToken.UserId);
 
-            return authToken;  
+            return authToken;
+        }
+
+        [HttpGet("resetpassword")]
+        public async Task ResetPassword(SocialAuthProvider provider, string email)
+        {
+            var authConfig = configuration.GetSection("AuthConfig").Get<AuthConfig>();
+            await authService.ResetPassword(authConfig, email);
+        }
+
+        [HttpGet("changepassword")]
+        public async Task<ActionResult<AuthToken>> ChangePassord(SocialAuthProvider provider, string accessToken, string newPassword)
+        {
+            var authConfig = configuration.GetSection("AuthConfig").Get<AuthConfig>();
+            var authToken = await authService.ChangePassword(authConfig, accessToken, newPassword);
+            authToken.CustomerExists = dataContext.Users.Any(c => c.FirebaseUserId == authToken.UserId);
+
+            return authToken;
         }
     }
 }
