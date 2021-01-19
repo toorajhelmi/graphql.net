@@ -93,6 +93,78 @@ namespace Apsy.Common.Api.Auth
             }
         }
 
+        public async Task ResetPassword(AuthConfig authConfig, string email)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var firebaseAuthProvider = new FirebaseAuthProvider(new FirebaseConfig(authConfig.ApiKey));
+                    await firebaseAuthProvider.SendPasswordResetEmailAsync(email);
+
+                }
+                catch (FirebaseAuthException e)
+                {
+                    switch (e.Reason)
+                    {
+                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail.ToDescription());
+                        case AuthErrorReason.MissingPassword: throw new AuthException(SignUpError.MissingPassword.ToDescription());
+                        case AuthErrorReason.WrongPassword: throw new AuthException(SignUpError.WrongPassowrd.ToDescription());
+                        case AuthErrorReason.UserDisabled: throw new AuthException(SignUpError.DisabledUser.ToDescription());
+                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail.ToDescription());
+                        case AuthErrorReason.Undefined: throw new AuthException(e.InnerException != null ? e.InnerException.Message : e.Message);
+                        default: throw new AuthException(SignUpError.Other.ToDescription());
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+
+        public async Task<AuthToken> ChangePassword(AuthConfig authConfig, string token, string newPassoword)
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var firebaseAuthProvider = new FirebaseAuthProvider(new FirebaseConfig(authConfig.ApiKey));
+                    var authLink = await firebaseAuthProvider.ChangeUserPassword(token, newPassoword);
+
+                    var authToken = new AuthToken
+                    {
+                        Token = authLink.FirebaseToken,
+                        ExpiresAt = DateTime.Now.AddSeconds(authLink.ExpiresIn)
+                    };
+
+                    var handler = new JwtSecurityTokenHandler();
+                    var userInfo = handler.ReadJwtToken(authLink.FirebaseToken);
+                    userInfo.Payload.TryGetValue("user_id", out object userId);
+                    authToken.UserId = userId as string;
+                    return authToken;
+                }
+                catch (FirebaseAuthException e)
+                {
+                    switch (e.Reason)
+                    {
+                        case AuthErrorReason.MissingEmail: throw new AuthException(SignUpError.MissingEmail.ToDescription());
+                        case AuthErrorReason.MissingPassword: throw new AuthException(SignUpError.MissingPassword.ToDescription());
+                        case AuthErrorReason.WrongPassword: throw new AuthException(SignUpError.WrongPassowrd.ToDescription());
+                        case AuthErrorReason.UserDisabled: throw new AuthException(SignUpError.DisabledUser.ToDescription());
+                        case AuthErrorReason.InvalidEmailAddress: throw new AuthException(SignUpError.InvalidEmail.ToDescription());
+                        case AuthErrorReason.Undefined: throw new AuthException(e.InnerException != null ? e.InnerException.Message : e.Message);
+                        default: throw new AuthException(SignUpError.Other.ToDescription());
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+
+
         public async Task<AuthToken> SocialLogin(AuthConfig authConfig, SocialAuthProvider provider, string accessToken)
         {
             using (var client = new HttpClient())
