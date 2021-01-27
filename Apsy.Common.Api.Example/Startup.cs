@@ -9,7 +9,7 @@ using Apsy.Example.Services;
 using Apsy.Example.Subscriptions;
 using GraphQL.Server;
 using GraphQL.Server.Ui.GraphiQL;
-using GraphQL.Server.Ui.Voyager;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +28,7 @@ namespace Apsy.Example
     public class Startup
     {
         private IWebHostEnvironment environment;
+        private bool usePlayground = false;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -122,12 +123,23 @@ namespace Apsy.Example
 
             app.UseGraphQLWebSockets<Schema>("/api");
             app.UseGraphQL<Schema>("/api");
-            app.UseGraphiQLServer(new GraphiQLOptions
+
+            if (!usePlayground)
             {
-                Path = "/ui/graphiql",
-                GraphQLEndPoint = "/api"
-            });
-            app.UseGraphQLVoyager(new GraphQLVoyagerOptions());
+                app.UseGraphiQLServer(new GraphiQLOptions
+                {
+                    Path = "/ui/graphiql",
+                    GraphQLEndPoint = "/api"
+                });
+            }
+            else
+            {
+                app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
+                {
+                    GraphQLEndPoint = "/api",
+                    Path = "/ui/pg",
+                });
+            }
 
             app.UseEndpoints(endpoints =>
             {

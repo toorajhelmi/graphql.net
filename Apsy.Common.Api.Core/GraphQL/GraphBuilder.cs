@@ -112,6 +112,13 @@ namespace Apsy.Common.Api.Core.Graph
                         else
                             graph.Field((Expression<Func<T, int>>)fieldExpression, isNullable, typeof(IntGraphType));
                         break;
+                    case "Int64":
+                    case "Long":
+                        if (isNullable)
+                            graph.Field((Expression<Func<T, Int64?>>)fieldExpression, isNullable, typeof(LongGraphType));
+                        else
+                            graph.Field((Expression<Func<T, Int64>>)fieldExpression, isNullable, typeof(LongGraphType));
+                        break;
                     case "Double":
                         if (isNullable)
                             graph.Field((Expression<Func<T, double?>>)fieldExpression, isNullable, typeof(FloatGraphType));

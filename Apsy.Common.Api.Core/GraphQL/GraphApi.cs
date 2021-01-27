@@ -1,4 +1,5 @@
 ﻿using GraphQL.Types;
+using System;
 
 namespace Apsy.Common.Api.Core.Graph
 {
@@ -8,11 +9,7 @@ namespace Apsy.Common.Api.Core.Graph
         {
             if (typeof(T).IsGenericType)
             {
-                var name = typeof(T).Name;
-                int index = name.IndexOf('`');
-                var nonGenericName = name.Substring(0, index);
-                //Name = $"{nonGenericName}_{typeof(T).GetGenericArguments()[0].Name}";
-                Name = nonGenericName;
+                Name = AppendGenericTypeName("", typeof(T));
             }
             else if (typeof(T).IsArray)
             {
@@ -24,6 +21,21 @@ namespace Apsy.Common.Api.Core.Graph
             }
 
             GraphBuilder.AddFields<T>(this);
+        }
+
+        private string AppendGenericTypeName(string currentName, Type type)
+        {
+            if (type.IsGenericType)
+            {
+                var name = type.Name;
+                int index = name.IndexOf('`');
+                var nonGenericName = name.Substring(0, index);
+                return currentName + $"{nonGenericName}_{AppendGenericTypeName(currentName, type.GetGenericArguments()[0])}";
+            }
+            else
+            {
+                return currentName + type.Name;
+            }
         }
     }
 }
